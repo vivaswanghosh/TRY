@@ -5,9 +5,10 @@ import { isAuthConfigured } from '../auth/authConfig';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth0();
+  const hasLocalToken = !!localStorage.getItem('token');
 
   if (!isAuthConfigured) {
-    return children;
+    return hasLocalToken ? children : <Navigate to="/login" />;
   }
 
   if (isLoading) {

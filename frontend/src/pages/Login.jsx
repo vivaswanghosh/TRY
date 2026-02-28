@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Navigate } from 'react-router-dom';
 import { isAuthConfigured } from '../auth/authConfig';
+import api from '../services/api';
 
 const Login = () => {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const [localAuth, setLocalAuth] = useState(!!localStorage.getItem('token'));
 
-  if (isAuthenticated) {
+  if (isAuthenticated || localAuth) {
     return <Navigate to="/" />;
   }
+
+  const handleMockLogin = async (role) => {
+    try {
+      const res = await api.post('/users/mock-login', { role });
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      setLocalAuth(true);
+      window.location.href = '/'; // force reload to update state
+    } catch (err) {
+      console.error('Mock login failed', err);
+    }
+  };
 
   return (
     <div className="min-h-[calc(100vh-72px)] flex items-center justify-center p-6 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-[#0f172a] to-black relative overflow-hidden">
@@ -31,9 +45,29 @@ const Login = () => {
 
           <div className="space-y-6">
             {!isAuthConfigured ? (
-              <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-4 text-center">
-                <p className="text-orange-400 text-sm font-medium">Auth0 is not fully configured.</p>
-                <p className="text-slate-400 text-xs mt-1">Please check your configuration files.</p>
+              <div className="space-y-4">
+                <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-4 text-center mb-4">
+                  <p className="text-orange-400 text-sm font-medium">Auth0 is not fully configured.</p>
+                  <p className="text-slate-400 text-xs mt-1">Using mock authentication instead.</p>
+                </div>
+                <button
+                  onClick={() => handleMockLogin('Admin')}
+                  className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-xl font-bold tracking-wide shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all duration-300 transform hover:-translate-y-1 focus:outline-none"
+                >
+                  Login as Admin
+                </button>
+                <button
+                  onClick={() => handleMockLogin('Teacher')}
+                  className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl font-bold tracking-wide shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all duration-300 transform hover:-translate-y-1 focus:outline-none"
+                >
+                  Login as Teacher
+                </button>
+                <button
+                  onClick={() => handleMockLogin('Student')}
+                  className="w-full py-3 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl font-bold tracking-wide shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all duration-300 transform hover:-translate-y-1 focus:outline-none"
+                >
+                  Login as Student
+                </button>
               </div>
             ) : (
               <button

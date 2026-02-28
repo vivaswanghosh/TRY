@@ -5,6 +5,15 @@ import { isAuthConfigured } from '../auth/authConfig';
 const Navbar = () => {
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
+  const hasLocalToken = !!localStorage.getItem('token');
+  const localUser = JSON.parse(localStorage.getItem('user') || 'null');
+
+  const handleMockLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/login';
+  };
+
   return (
     <nav className="h-[72px] sticky top-0 z-50 glass-panel border-b border-white/10 px-6 flex items-center justify-between transition-all duration-300">
       <div className="flex items-center gap-3 animate-fade-in">
@@ -28,7 +37,19 @@ const Navbar = () => {
           </div>
         )}
 
-        {isAuthConfigured && (
+        {!isAuthConfigured && hasLocalToken && localUser && (
+          <div className="hidden md:flex items-center gap-3 bg-white/5 rounded-full px-4 py-1.5 border border-white/5 animate-fade-in">
+            <div className="w-8 h-8 rounded-full border-2 border-primary/50 bg-indigo-500/20 flex items-center justify-center text-indigo-300 font-bold text-xs uppercase">
+              {localUser.role.charAt(0)}
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-medium text-slate-200 leading-tight">{localUser.role}</span>
+              <span className="text-xs text-slate-400 leading-tight">{localUser.email}</span>
+            </div>
+          </div>
+        )}
+
+        {isAuthConfigured ? (
           isAuthenticated ? (
             <button
               onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
@@ -42,6 +63,16 @@ const Navbar = () => {
               className="px-5 py-2 rounded-xl text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-lg shadow-blue-500/25 transition-all duration-200 transform hover:-translate-y-0.5"
             >
               Login / Register
+            </button>
+          )
+        ) : (
+          hasLocalToken ? (
+            <button onClick={handleMockLogout} className="px-5 py-2 rounded-xl text-sm font-medium text-slate-300 bg-white/5 hover:bg-white/10 hover:text-white border border-white/10 transition-all duration-200">
+              Logout
+            </button>
+          ) : (
+            <button onClick={() => window.location.href = '/login'} className="px-5 py-2 rounded-xl text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-lg shadow-blue-500/25 transition-all duration-200 transform hover:-translate-y-0.5">
+              Login
             </button>
           )
         )}
