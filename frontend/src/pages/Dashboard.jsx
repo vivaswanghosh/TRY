@@ -15,7 +15,7 @@ const Dashboard = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Welcome back, {user?.given_name || 'Student'}! 👋</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">Welcome back, {user?.given_name || 'Student'}!</h1>
         <p className="text-slate-400">Here's what's happening in your academic world today.</p>
       </header>
 
@@ -53,7 +53,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <h3 className="text-white font-medium">Advanced Algorithms</h3>
-                  <p className="text-sm text-slate-400 mt-1">Room 40{i} • Prof. Smith</p>
+                  <p className="text-sm text-slate-400 mt-1">Room 40{i} - Prof. Smith</p>
                 </div>
               </div>
             ))}
@@ -89,3 +89,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+

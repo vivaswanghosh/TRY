@@ -8,6 +8,8 @@ const navItems = [
   { path: '/routine', icon: 'table', label: 'Routine & Swaps' },
   { path: '/calendar', icon: 'calendar', label: 'Calendar' },
   { path: '/notifications', icon: 'bell', label: 'Notifications' },
+  { path: '/quizzes', icon: 'document-text', label: 'Quizzes' },
+  { path: '/departments', icon: 'collection', label: 'Departments' },
 ];
 
 const getIcon = (name) => {
@@ -18,6 +20,7 @@ const getIcon = (name) => {
     case 'table': return <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />;
     case 'calendar': return <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />;
     case 'bell': return <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />;
+    case 'collection': return <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />;
     default: return null;
   }
 };

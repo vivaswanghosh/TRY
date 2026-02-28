@@ -10,6 +10,10 @@ import Assignments from './pages/Assignments';
 import Routine from './pages/Routine';
 import Notifications from './pages/Notifications';
 import Login from './pages/Login';
+import Quizzes from './pages/Quizzes';
+import TakeQuiz from './pages/TakeQuiz';
+import QuizResults from './pages/QuizResults';
+import Departments from './pages/Departments';
 
 function App() {
   return (
@@ -24,8 +28,12 @@ function App() {
             <Route path="/elibrary" element={<ProtectedRoute><ELibrary /></ProtectedRoute>} />
             <Route path="/calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
             <Route path="/assignments" element={<ProtectedRoute><Assignments /></ProtectedRoute>} />
+            <Route path="/departments" element={<ProtectedRoute><Departments /></ProtectedRoute>} />
             <Route path="/routine" element={<ProtectedRoute><Routine /></ProtectedRoute>} />
             <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+            <Route path="/quizzes" element={<ProtectedRoute><Quizzes /></ProtectedRoute>} />
+            <Route path="/quizzes/:id/take" element={<ProtectedRoute><TakeQuiz /></ProtectedRoute>} />
+            <Route path="/quizzes/:id/results" element={<ProtectedRoute><QuizResults /></ProtectedRoute>} />
           </Routes>
         </main>
       </div>

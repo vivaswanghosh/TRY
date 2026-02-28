@@ -43,8 +43,14 @@
 
 .gradient-text {
   background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  background-clip: text;
+  /* Standard property */
   -webkit-background-clip: text;
+  /* For Chrome, Safari */
+  color: transparent;
+  /* Standard way */
   -webkit-text-fill-color: transparent;
+  /* Required for Safari */
 }
 
 .animate-fade-in {
@@ -56,13 +62,25 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Base layouts */
@@ -70,6 +88,7 @@
   display: flex;
   min-height: calc(100vh - 72px);
 }
+
 .main-content {
   flex: 1;
   padding: 2rem;
@@ -82,13 +101,16 @@
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--background); 
+  background: var(--background);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--muted); 
+  background: var(--muted);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--secondary); 
+  background: var(--secondary);
 }

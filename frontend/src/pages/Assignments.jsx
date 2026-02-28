@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAssignments, submitAssignment } from '../services/assignmentService';
 import { useAuth0 } from '@auth0/auth0-react';
+import ContentFilter from '../components/ContentFilter';
 
 const Assignments = () => {
   const [assignments, setAssignments] = useState([]);
@@ -11,9 +12,10 @@ const Assignments = () => {
     fetchAssignments();
   }, []);
 
-  const fetchAssignments = async () => {
+  const fetchAssignments = async (filters = {}) => {
+    setLoading(true);
     try {
-      const { data } = await getAssignments();
+      const { data } = await getAssignments(filters);
       setAssignments(data);
     } catch (error) {
       console.error('Failed to fetch assignments', error);
@@ -47,6 +49,8 @@ const Assignments = () => {
           New Assignment
         </button>
       </div>
+
+      <ContentFilter onFilterChange={fetchAssignments} />
 
       {loading ? (
         <div className="text-center text-slate-400 py-12">Loading assignments...</div>
